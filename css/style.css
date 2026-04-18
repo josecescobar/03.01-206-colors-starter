@@ -165,71 +165,116 @@ a:hover {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 100px 20px 60px;
-  background: #0a0a0a;
+  padding: 120px 20px 80px;
+  background:
+    radial-gradient(ellipse at top, #15131f 0%, #0a0a0f 55%, #050507 100%);
   overflow: hidden;
+  isolation: isolate;
 }
 
-.hero-bg {
+/* Subtle ambient glows */
+.hero-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.55;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-glow-1 {
+  top: -10%;
+  left: -10%;
+  width: 55%;
+  height: 55%;
+  background: radial-gradient(circle, rgba(155, 89, 255, 0.45), transparent 70%);
+}
+
+.hero-glow-2 {
+  bottom: -15%;
+  right: -10%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.35), transparent 70%);
+}
+
+/* Faint grid texture for depth */
+.hero-grid {
   position: absolute;
   inset: 0;
   z-index: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  pointer-events: none;
 }
 
-.hero-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 35%;
-  filter: saturate(1.05) contrast(1.05);
-}
-
-.hero-overlay {
+/* Massive faint brand watermark behind everything */
+.hero-watermark {
   position: absolute;
-  inset: 0;
-  z-index: 1;
-  background:
-    linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.4) 40%, rgba(10,10,10,0.85) 100%),
-    linear-gradient(135deg, rgba(155,89,255,0.25) 0%, rgba(0,0,0,0) 50%, rgba(0,212,255,0.2) 100%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(18rem, 40vw, 32rem);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.04);
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
 }
 
-/* Dot grid pattern (matches logo corner element) */
+/* Vignette to focus the eye */
 #hero::after {
   content: '';
   position: absolute;
-  bottom: 5%;
-  left: 3%;
-  width: 140px;
-  height: 140px;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.25) 1.5px, transparent 1.5px);
-  background-size: 14px 14px;
-  z-index: 2;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.6) 100%);
+  pointer-events: none;
 }
 
 .hero-content {
   position: relative;
   z-index: 3;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.7);
+  max-width: 760px;
 }
 
-.hero-tagline {
-  font-size: 0.8rem;
+/* Eyebrow with side rules */
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.eyebrow-line {
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+}
+
+.eyebrow-text {
+  font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 3px;
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  display: inline-block;
-  margin-bottom: 20px;
+  letter-spacing: 4px;
+  color: var(--text-secondary);
 }
 
 #hero h1 {
-  font-size: 3rem;
+  font-size: 3.2rem;
   font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: 2px;
-  margin-bottom: 20px;
+  line-height: 0.95;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+  text-transform: uppercase;
 }
 
 #hero h1 .accent {
@@ -237,13 +282,69 @@ a:hover {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  letter-spacing: 4px;
 }
 
 .hero-sub {
   font-size: 1rem;
   color: var(--text-secondary);
-  max-width: 500px;
-  margin: 0 auto 35px;
+  max-width: 520px;
+  margin: 0 auto 36px;
+  line-height: 1.6;
+}
+
+/* Trust row */
+.hero-trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+  padding: 18px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  max-width: max-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.trust-stars {
+  color: #ffd700;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+}
+
+.trust-big {
+  font-size: 0.95rem;
+  font-weight: 800;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 1px;
+}
+
+.trust-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+}
+
+.trust-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .hero-buttons {
@@ -251,6 +352,53 @@ a:hover {
   flex-direction: column;
   gap: 12px;
   align-items: center;
+}
+
+.hero-footer {
+  margin-top: 24px;
+  font-size: 0.75rem;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* Scroll indicator */
+.hero-scroll {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 3;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.hero-scroll:hover {
+  color: var(--accent);
+  opacity: 1;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(180deg, transparent, currentColor);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+.scroll-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.2); }
 }
 
 .btn {
@@ -651,7 +799,15 @@ footer a:hover {
 
 @media (min-width: 768px) {
   #hero h1 {
-    font-size: 4.5rem;
+    font-size: 5rem;
+  }
+
+  .eyebrow-text {
+    font-size: 0.75rem;
+  }
+
+  .eyebrow-line {
+    width: 60px;
   }
 
   .hero-buttons {
@@ -713,7 +869,7 @@ footer a:hover {
 
 @media (min-width: 1200px) {
   #hero h1 {
-    font-size: 5.5rem;
+    font-size: 6.5rem;
   }
 
   .hero-sub {
